@@ -1,16 +1,147 @@
 <!DOCTYPE HTML>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>html test page</title>
-    <style>
-      body {
-        background-color: #FFFF10;
-      }
-    </style>
-  </head>
-  <body>
-    <p>Hello my name is ASCASC</p>
-  </body>
-<html>
+ <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>ᴄs ɴᴏᴛᴇ</title>
+
+  <style>
+    body {
+      background-color: #101010;
+      color: #FFFFFF;
+
+    .list, textarea, span {
+      border: 4px;
+      width: 82%;
+      padding: 50px;
+      font-family: Monospace;
+      font-size: 15px;
+      background-color: #101010;
+      color: #FFFFFF;
+    }
+
+    textarea:focus {
+      border-color: #4A90E2;
+      outline: none;
+      box-shadow: 0 0 5px rgba(194, 194, 194, 0.5);
+    }
+
+    button {
+      background-color: #debc00;
+      color: #ffffff;
+      border: 2px solid #debc00;
+      border-radius: 8px;
+      margin-top: 20px;
+      margin-left: 30px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    select {
+      border: 2px solid #debc00;
+      background-color: #debc00;
+      border-radius: 8px;
+      color: #ffffff;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+    }
+
+   input {
+      border: 1px solid #101010;
+      border-radius: 8px;
+      padding: 5px 10px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      font-family: Monospace;
+      font-size: 15px;
+   }
+  </style>
+
+ </head>
+
+ <body>
+
+  <textarea id="myTextarea" placeholder="Write something..." rows="30" cols="100">If Result</textarea>
+
+  <br>
+
+  <button onclick="transferData()">Load</button>
+
+  <span class="classList">
+   <label for="folder">Choose the folder</label>
+   <select id="folder" name="folder">
+    <option value="None">None</option>
+    <option value="Add">+Add</option>
+Combined Text
+   </select>
+  </span>
+
+  <br>
+
+  <span style="display: none" id="invisibleContainer">
+   <p>Name of the folder:</p>
+   <input id="folderName" type="text" placeholder="Name">
+   <button onclick="addOption()">Add</button>
+  </span>
+
+  <br>
+
+  <hr style="margin: 30px">
+
+  <span id="myClipboardArea">Original Clipboard</span> 
+  <button onclick="copyText()">Copy</button>
+
+ </body>
+
+ <script>
+
+  const select = document.getElementById("folder");
+
+  function addOption() {
+    const name = document.getElementById("folderName")
+
+    // Create a new <option> element
+    const newOption = document.createElement("option");
+    newOption.value = name.value;
+    newOption.text = name.value;
+
+    // Add it to the <select>
+    select.appendChild(newOption);
+  }
+
+  const otherBox = document.getElementById("invisibleContainer");
+
+  select.addEventListener("change", function () {
+    if (select.value === "Add") {
+      otherBox.style.display = "block";
+    } else {
+      otherBox.style.display = "none";
+    }
+  });
+
+  const textarea = document.getElementById('myTextarea');
+
+  textarea.addEventListener('input', () => {
+    transferData().catch(err => {
+      console.error('Clipboard write failed:', err);
+    });
+  });
+
+  function transferData() {
+
+    navigator.clipboard.writeText(`${select.value} || ${textarea.value}`).then(() => {
+      alert("Text copied: " + combinedText);
+    }).catch(err => {
+      alert("Failed to copy text: " + err);
+    });
+  }
+
+ </script>
+</html>
